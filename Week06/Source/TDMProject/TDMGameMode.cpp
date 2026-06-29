@@ -88,6 +88,18 @@ void ATDMGameMode::OnMatchTimerTick()
             if (GEngine)
             {
                 GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("TIME UP! Match Over!"));
+                if (TDMGameState->TeamScores[0] > TDMGameState->TeamScores[1])
+                {
+                    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Team 0 wins!"));
+                }
+                else if (TDMGameState->TeamScores[1] > TDMGameState->TeamScores[0])
+                {
+                    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Team 1 wins!"));
+                }
+                else
+                {
+                    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("It's a tie!"));
+                }
             }
 
             EndMatch();
@@ -126,6 +138,7 @@ void ATDMGameMode::ScoreKill(AController* KillerController, AController* VictimC
                     if (GEngine)
                     {
                         GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("SCORE LIMIT REACHED! Match Over!"));
+                        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Team %d wins!"), KillerTeam));
                     }
 
                     EndMatch();
